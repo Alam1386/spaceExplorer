@@ -1,7 +1,7 @@
 const { gql } = require('apollo-server-express')
 
 module.exports = gql`
-scalar Int
+scalar Date
 type Query {
   getAllUsers: [User],
   user(id: ID): User,
@@ -29,12 +29,10 @@ type Launch {
 type Mutation{
   signUp(input: signupInput!): signupResponse!,
   login(input: loginInput!): loginResponse!,
-  bookTrips(launchIds: [ID]!): TripUpdateResponse!
+  bookLaunch(id: ID): launchUpdateResponse
 }
-type TripUpdateResponse {
-  success: Boolean!
+type launchUpdateResponse {
   message: String
-  launches: [Launch]
 }
 type Rocket {
   id: ID!
@@ -48,6 +46,15 @@ type Mission {
 enum PatchSize {
   SMALL
   LARGE
+}
+input launchInput{
+  user_id: Int,
+  flight_no: Int,
+  flight_name: String,
+  passenger_name: String,
+  price: Int,
+  departure_date: Date,
+  destination: String
 }
 input signupInput{
   first_name: String,

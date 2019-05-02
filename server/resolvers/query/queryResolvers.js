@@ -18,26 +18,13 @@ module.exports = {
     },
     async launch(parent, {id}, {app, req}, info) {
       authenticate(app, req)
-      const response = await axios(`https://api.spacexdata.com/v3/launches/${parent.id}`)
+      const response = await axios(`https://api.spacexdata.com/v3/launches/${id}`)
       // console.log(response.data)
       return {
         id: response.data.flight_number,
         site: response.data.launch_site.site_name,
-        launchYear: response.data.launch_year,
-        // rocket: {
-        //   id: response.data.rocket.rocket_id,
-        //   name: response.data.rocket.rocket_name,
-        //   type: response.data.rocket.rocket_type
-        // }
+        launchYear: response.data.launch_year
       }
-      // const response = {
-      //   id: 1,
-      //   site: 'Kwajalein Atoll',
-      //   launchYear: "2006",
-      //   rocket_id: 1
-      // }
-      // return response
     }
   },
-
 }

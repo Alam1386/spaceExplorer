@@ -4,7 +4,7 @@ const saltRounds = 12
 const crypto = require('crypto')
 const Promise = require('bluebird')
 const authenticate = require('../authenticate')
-
+const axios = require('axios')
 module.exports = {
   Mutation: {
     async signUp( parent, {input}, { req, app, postgres }){
@@ -52,6 +52,15 @@ module.exports = {
           }
         }
     },
+    async bookLaunch(parent, input, {req, app, postgres}){
+      // console.log("parent id", parent, input)
+      const flightId = await axios(`https://api.spacexdata.com/v3/launches/${input.id}`)
+      // console.log("parent id is:", flightId)
+      // console.log(" Flight number is: ", input.data.flight_number)
+      return{
+        message: input.id
+      }
+    }
   },
 }
 
