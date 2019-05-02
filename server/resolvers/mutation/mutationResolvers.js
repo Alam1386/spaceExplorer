@@ -52,13 +52,21 @@ module.exports = {
           }
         }
     },
-    async bookLaunch(parent, input, {req, app, postgres}){
+    async booklaunch(parent, input, {req, app, postgres}){
+      let userid = authenticate(app, req)
+      console.log("The user id: ===============/n", userid)
       // console.log("parent id", parent, input)
       const flightId = await axios(`https://api.spacexdata.com/v3/launches/${input.id}`)
       // console.log("parent id is:", flightId)
-      // console.log(" Flight number is: ", input.data.flight_number)
+      // console.log(" Flight number is: ", flightId.data.flight_number)
+      const insertId = {
+        text: "INSERT INTO space.booklaunch (user_id, flight_no) VALUES ($1, $2) RETURNING *",
+        values: [userid, flightId.data.flight_number]
+      }
+      let insertedValues  = await postgres.query(insertId);
+      // console.log("The inserted values are: ", insertedValues);
       return{
-        message: input.id
+        message: `The flight ID is: ${flightId.data.flight_number} AND Flight name is: ${flightId.data.rocket.rocket_name}`
       }
     }
   },

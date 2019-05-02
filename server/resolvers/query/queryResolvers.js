@@ -25,6 +25,23 @@ module.exports = {
         site: response.data.launch_site.site_name,
         launchYear: response.data.launch_year
       }
+    },
+    async mybookings(parent, {id}, {app, req, postgres}, info){
+      let userid = authenticate(app, req)
+      const findUserQuery = {
+        text: 'SELECT * FROM space.booklaunch where user_id = $1',
+        values: [userid]        
+      }
+      const userBookings = await postgres.query(findUserQuery)
+      const bookingspromises = await userBookings.rows.map(element =>{
+        return axios.get("https://api.spacexdata.com/v3/launches/" + element.flight_no)
+      })
+      const resolvedbooking = await Promise.all(bookingspromises)      
+      let bookingData = resolvedbooking.map(element => {
+        return element.data
+      })
+      return bookingData;
     }
   },
 }
+// const response = await axios(`https://api.spacexdata.com/v3/launches/${id}`)

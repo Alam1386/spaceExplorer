@@ -3,16 +3,16 @@ const squel = require('squel').useFlavour('postgres')
 const config = require('../config/default.json')
 
 const userSeeds = [
-  {
-    fullname: 'Simon Stern',
-    email: 'simon@simon.stern',
-    password: '123',
-  },
-  {
-    fullname: 'Akshay Manchanda',
-    email: 'akshay@akshay.com',
-    password: '123',
-  }
+  // {
+    
+  //   email: 'simon@simon.stern',
+  //   password: '123',
+  // },
+  // {
+    
+  //   email: 'akshay@akshay.com',
+  //   password: '123',
+  // }
 ]
 
 const seed = async () => {
@@ -28,7 +28,7 @@ const seed = async () => {
         pg.query(
           squel
             .insert()
-            .into('spaceexplorer.users')
+            .into('space.users')
             .setFields(userSeed)
             .toParam()
         )

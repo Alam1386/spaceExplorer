@@ -6,7 +6,8 @@ type Query {
   getAllUsers: [User],
   user(id: ID): User,
   launches: [Launch]!,
-  launch(id: ID!): Launch
+  launch(id: ID!): Launch,
+  mybookings: [Launch]
 }
 type User {
     id: ID!,
@@ -19,9 +20,10 @@ type User {
     gender: String
   }
 type Launch {
-  id: ID!
+  flight_number: Int
   site: String
-  launchYear: String
+  launch_year: String
+  mission_name: String
   mission(size: PatchSize): Mission
   rocket: Rocket
 }
@@ -29,7 +31,7 @@ type Launch {
 type Mutation{
   signUp(input: signupInput!): signupResponse!,
   login(input: loginInput!): loginResponse!,
-  bookLaunch(id: ID): launchUpdateResponse
+  booklaunch(id: ID): launchUpdateResponse
 }
 type launchUpdateResponse {
   message: String
