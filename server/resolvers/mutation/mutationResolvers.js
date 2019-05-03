@@ -54,7 +54,7 @@ module.exports = {
     },
     async booklaunch(parent, input, {req, app, postgres}){
       let userid = authenticate(app, req)
-      console.log("The user id: ===============/n", userid)
+      console.log("The user id: =======================================================/n", userid)
       // console.log("parent id", parent, input)
       const flightId = await axios(`https://api.spacexdata.com/v3/launches/${input.id}`)
       // console.log("parent id is:", flightId)
